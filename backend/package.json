@@ -1,0 +1,26 @@
+{
+  "name": "cybertwin-backend",
+  "version": "0.1.0",
+  "description": "CyberTwin security backend - Preview Before You Proceed",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "cybertwin",
+    "security",
+    "phishing-detector",
+    "sandbox"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^4.21.2",
+    "playwright": "^1.63.0",
+    "whois-json": "^2.0.4"
+  }
+}

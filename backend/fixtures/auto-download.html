@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Critical Security Patch Required</title>
+  <style>
+    body { font-family: sans-serif; background: #1a1a1a; color: #f1f1f1; text-align: center; padding-top: 80px; }
+    .alert-box { background: #2d1515; border: 2px solid #ef4444; border-radius: 8px; max-width: 500px; margin: 0 auto; padding: 24px; }
+    h1 { color: #f87171; font-size: 22px; }
+    p { margin-top: 10px; color: #cbd5e1; }
+  </style>
+</head>
+<body>
+  <div class="alert-box">
+    <h1>⚠️ Automated Driver Update</h1>
+    <p>Your graphics display driver has crashed. An automated recovery tool is downloading now...</p>
+    <p style="font-size: 12px; color: #94a3b8; margin-top: 15px;">File: <code>driver_recovery_patch.exe</code></p>
+  </div>
+
+  <script>
+    // Automated download attempt trapped by CyberTwin sandbox
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const blob = new Blob(["MZ...fake executable binary payload..."], { type: 'application/octet-stream' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'driver_recovery_patch.exe';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        console.log('[SandboxFixture] Triggered auto-download of driver_recovery_patch.exe');
+      }, 300);
+    });
+  </script>
+</body>
+</html>

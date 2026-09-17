@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberTwin Control Panel</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="ct-popup-container">
+    <header class="ct-header">
+      <div class="ct-brand">
+        <span class="ct-icon">🛡️</span>
+        <div>
+          <h1 class="ct-title">CyberTwin</h1>
+          <span class="ct-tagline">Preview Before You Proceed</span>
+        </div>
+      </div>
+      <div class="ct-stage-pill">Stage 2</div>
+    </header>
+
+    <main class="ct-main">
+      <!-- Protection Toggle -->
+      <div class="ct-card ct-toggle-card">
+        <div class="ct-toggle-info">
+          <span class="ct-label">Link Interceptor</span>
+          <span class="ct-sublabel" id="protection-status-label">Active & Guarding</span>
+        </div>
+        <label class="ct-switch">
+          <input type="checkbox" id="toggle-enabled" checked>
+          <span class="ct-slider"></span>
+        </label>
+      </div>
+
+      <!-- Backend Server Status -->
+      <div class="ct-card">
+        <div class="ct-card-header">
+          <span class="ct-label">Backend Analyzer</span>
+          <span class="ct-status-dot" id="backend-status-dot"></span>
+        </div>
+        <div class="ct-status-desc" id="backend-status-text">Checking backend on localhost:3001...</div>
+        <div class="ct-meta-row">
+          <span class="ct-meta-key">Pipeline:</span>
+          <code class="ct-meta-val">Reputation + Static HTML</code>
+        </div>
+      </div>
+
+      <!-- Pipeline Stage Info -->
+      <div class="ct-pipeline-box">
+        <div class="ct-pipeline-title">Active Security Pipeline:</div>
+        <ul class="ct-pipeline-steps">
+          <li class="step completed">
+            <span class="step-num">✓</span>
+            <span class="step-text">Stage 0: Link Interceptor + Pre-Flight UI</span>
+          </li>
+          <li class="step completed">
+            <span class="step-num">✓</span>
+            <span class="step-text">Stage 1: Safe Browsing & WHOIS Domain Age</span>
+          </li>
+          <li class="step completed">
+            <span class="step-num">✓</span>
+            <span class="step-text">Stage 2: Static HTML Heuristics (Cheerio)</span>
+          </li>
+          <li class="step pending">
+            <span class="step-num">3</span>
+            <span class="step-text">Stage 3: Dockerized Playwright Twin (Next)</span>
+          </li>
+          <li class="step pending">
+            <span class="step-num">4</span>
+            <span class="step-text">Stage 4: Claude AI Plain-English Risk (Next)</span>
+          </li>
+        </ul>
+      </div>
+    </main>
+
+    <footer class="ct-footer">
+      <a href="http://localhost:3001/demo/test-page.html" target="_blank" class="ct-btn-demo" id="open-demo-page">
+        Open Test Playground 🚀
+      </a>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

