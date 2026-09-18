@@ -176,6 +176,39 @@ function analyzeHtml(html, finalUrl, redirectMeta = {}, domainAgeMeta = {}) {
     heuristicScore += 40;
   }
 
+  // 3B. Check for Auto-Download Triggers (runtime behavior indicators)
+  const downloadTriggerPatterns = [];
+
+  inlineScripts.each((_, el) => {
+    const code = $(el).html() || '';
+    if (code.length < 15) return;
+
+    if (/createObjectURL\s*\(/i.test(code)) {
+      downloadTriggerPatterns.push('Blob URL creation (used to trigger file downloads)');
+    }
+    if (/\.download\s*=/i.test(code)) {
+      downloadTriggerPatterns.push('Programmatic download attribute assignment');
+    }
+    if (/\.click\s*\(\s*\)/i.test(code) && /createElement\s*\(\s*['"]a['"]\s*\)/i.test(code)) {
+      downloadTriggerPatterns.push('Auto-triggered anchor click (common auto-download pattern)');
+    }
+    if (/setTimeout\s*\(/i.test(code) && (/download/i.test(code) || /\.click\s*\(/i.test(code))) {
+      downloadTriggerPatterns.push('Delayed auto-execution near download-related code');
+    }
+  });
+
+  const hasDownloadTrigger = downloadTriggerPatterns.length > 0;
+  details.downloadTrigger = {
+    detected: hasDownloadTrigger,
+    count: downloadTriggerPatterns.length,
+    reasons: [...new Set(downloadTriggerPatterns)]
+  };
+
+  if (hasDownloadTrigger) {
+    flags.push(`Auto-download trigger detected in page script (${details.downloadTrigger.reasons.join(', ')})`);
+    heuristicScore += 45;
+  }
+
   // 4. Check for Redirect Hops & Cross-Domain Hops
   const hops = redirectMeta.hops || 0;
   const isCrossDomain = redirectMeta.isCrossDomain || false;
@@ -204,12 +237,12 @@ function analyzeHtml(html, finalUrl, redirectMeta = {}, domainAgeMeta = {}) {
   const finalScore = Math.min(95, Math.max(8, heuristicScore));
 
   // Determine verdict and tier
-  const isSuspicious = finalScore >= 40 || (hasPasswordInput && detectedBrandMismatch) || hasObfuscatedScripts || hops >= 3;
+  const isSuspicious = finalScore >= 40 || (hasPasswordInput && detectedBrandMismatch) || hasObfuscatedScripts || hops >= 3 || hasDownloadTrigger;
   const verdict = finalScore >= 70 ? 'dangerous' : isSuspicious ? 'suspicious' : 'safe';
   const tier = isSuspicious ? 'stage2-escalated' : 'static-pass';
 
   // Compose plain English explanation
-  const plainEnglish = buildPlainEnglishExplanation(flags, finalScore, detectedBrandMismatch, hasPasswordInput, hasObfuscatedScripts, hops);
+    const plainEnglish = buildPlainEnglishExplanation(flags, finalScore, detectedBrandMismatch, hasPasswordInput, hasObfuscatedScripts, hops, hasDownloadTrigger);
 
   return {
     score: finalScore,
@@ -221,7 +254,7 @@ function analyzeHtml(html, finalUrl, redirectMeta = {}, domainAgeMeta = {}) {
   };
 }
 
-function buildPlainEnglishExplanation(flags, score, brandMismatch, hasPassword, hasObfuscated, hops) {
+function buildPlainEnglishExplanation(flags, score, brandMismatch, hasPassword, hasObfuscated, hops, hasDownloadTrigger) {
   if (flags.length === 0 || score < 40) {
     return 'Static HTML analysis found no credential harvesting forms, no brand impersonation, and clean code structure. The page appears normal.';
   }
@@ -246,6 +279,10 @@ function buildPlainEnglishExplanation(flags, score, brandMismatch, hasPassword, 
 
   if (hops >= 3) {
     parts.push(`It bounced through ${hops} separate redirects before loading, a common evasive tactic used by malicious links.`);
+  }
+
+    if (hasDownloadTrigger) {
+    parts.push('The page contains code designed to automatically start a file download the moment it loads, without you clicking anything.');
   }
 
   return parts.join(' ');

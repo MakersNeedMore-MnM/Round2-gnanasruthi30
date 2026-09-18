@@ -214,7 +214,9 @@ app.post('/analyze', async (req, res) => {
     let finalScore = staticResult.score;
     let finalVerdict = staticResult.verdict;
     let finalTier = staticResult.tier;
-    let finalReason = staticResult.flags.length > 0 ? staticResult.flags[0] : 'Static analysis clean';
+        let finalReason = staticResult.verdict === 'safe'
+      ? 'Static analysis clean: no credential traps or brand anomalies found'
+      : (staticResult.flags.length > 0 ? staticResult.flags[0] : 'Static analysis clean: no credential traps or brand anomalies found');
     let finalPlainEnglish = staticResult.plainEnglish;
 
     if (staticResult.tier === 'stage2-escalated') {
@@ -234,9 +236,15 @@ app.post('/analyze', async (req, res) => {
         finalVerdict = finalVerdict === 'safe' ? 'suspicious' : finalVerdict;
         finalReason = `Sandbox observed contact with ${crossDomainCount} external domains`;
         finalPlainEnglish = `In our isolated test, this page silently contacted ${crossDomainCount} other websites in the background — more than expected for a normal page. ${finalPlainEnglish}`;
-      } else {
-        finalReason = 'Sandbox execution found no dangerous behavior';
-        finalPlainEnglish = `We safely opened this page in an isolated environment and it behaved normally — no hidden downloads or suspicious background activity. ${finalPlainEnglish}`;
+            } else {
+        // Don't overwrite an already-dangerous Stage 2 verdict with false reassurance
+        if (staticResult.verdict === 'dangerous' || staticResult.verdict === 'suspicious') {
+          finalPlainEnglish = `${finalPlainEnglish} We also opened this page in an isolated sandbox to confirm — it didn't trigger additional downloads or background network activity, but the risks identified above still apply.`;
+          // finalReason stays as the original Stage 2 reason — do not touch it
+        } else {
+          finalReason = 'Sandbox execution found no dangerous behavior';
+          finalPlainEnglish = `We safely opened this page in an isolated environment and it behaved normally — no hidden downloads or suspicious background activity. ${finalPlainEnglish}`;
+        }
       }
 
       finalTier = 'sandbox-executed';

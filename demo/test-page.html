@@ -214,6 +214,22 @@
         </div>
       </div>
 
+            <!-- Test: Sandbox Auto-Download Detection -->
+      <div class="card">
+        <div>
+          <div class="card-title">📥 Case: Auto-Download Trap</div>
+          <div class="card-desc">Fake "driver update" page that automatically triggers a file download when opened — tests sandbox download detection.</div>
+          <div class="expected-outcome">
+            <strong>Expected:</strong> Tier: <code>SANDBOX EXECUTED</code>, Reason mentions a detected download attempt.
+          </div>
+        </div>
+        <div>
+          <a href="http://localhost:3001/fixtures/auto-download.html" class="demo-link danger">
+            Click: Auto-Download Trap Test &rarr;
+          </a>
+        </div>
+      </div>
+      
       <!-- Test 3: Stage 2 Multi-Hop Redirect Chain -->
       <div class="card">
         <div>
