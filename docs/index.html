@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CyberTwin — Preview Before You Proceed</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background: #090e17;
+      color: #f8fafc;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(1050px, 92%);
+      margin: auto;
+    }
+
+    /* NAVBAR */
+
+    nav {
+      height: 75px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 800;
+      color: white;
+    }
+
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #38bdf8, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .nav-link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .nav-link:hover {
+      color: white;
+    }
+
+    /* HERO */
+
+    .hero {
+      text-align: center;
+      padding: 90px 0 70px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      background: rgba(56, 189, 248, 0.1);
+      color: #38bdf8;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-size: clamp(40px, 7vw, 70px);
+      line-height: 1.05;
+      margin-bottom: 22px;
+      letter-spacing: -2px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #38bdf8, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: auto;
+      color: #94a3b8;
+      font-size: 17px;
+    }
+
+    /* BUTTONS */
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      text-decoration: none;
+      padding: 13px 22px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: #38bdf8;
+      color: #020617;
+    }
+
+    .btn-primary:hover {
+      background: #7dd3fc;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      border: 1px solid #334155;
+      color: #e2e8f0;
+      background: #0f172a;
+    }
+
+    .btn-secondary:hover {
+      border-color: #38bdf8;
+      transform: translateY(-2px);
+    }
+
+    /* STATUS */
+
+    .status {
+      margin: 25px auto 0;
+      width: fit-content;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      color: #4ade80;
+      font-size: 13px;
+    }
+
+    /* CARDS */
+
+    .section {
+      padding: 55px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: #64748b;
+      font-size: 14px;
+      margin-bottom: 35px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 14px;
+      padding: 25px;
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      border-color: #334155;
+      transform: translateY(-3px);
+    }
+
+    .card-icon {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: #94a3b8;
+      font-size: 13px;
+    }
+
+    /* INSTALLATION */
+
+    .install-box {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 14px;
+      padding: 30px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .steps {
+      list-style: none;
+      counter-reset: steps;
+    }
+
+    .steps li {
+      counter-increment: steps;
+      position: relative;
+      padding: 12px 12px 12px 50px;
+      color: #cbd5e1;
+      font-size: 14px;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .steps li:last-child {
+      border-bottom: none;
+    }
+
+    .steps li::before {
+      content: counter(steps);
+      position: absolute;
+      left: 5px;
+      top: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #1e293b;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    code {
+      background: #020617;
+      color: #c084fc;
+      padding: 3px 7px;
+      border-radius: 5px;
+    }
+
+    /* ARCHITECTURE */
+
+    .architecture {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 14px;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .flow-box {
+      background: #020617;
+      border: 1px solid #334155;
+      border-radius: 9px;
+      padding: 15px 20px;
+      min-width: 150px;
+    }
+
+    .flow-box strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .flow-box span {
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .arrow {
+      color: #38bdf8;
+      font-size: 22px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid #1e293b;
+      margin-top: 50px;
+      padding: 30px 0;
+      text-align: center;
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    footer a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+
+    @media (max-width: 750px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 65px 0 50px;
+      }
+
+      .flow {
+        flex-direction: column;
+      }
+
+      .arrow {
+        transform: rotate(90deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+      <div class="logo">
+        <div class="logo-icon">🛡️</div>
+        CyberTwin
+      </div>
+
+      <a
+        href="https://github.com/MakersNeedMore-MnM/Round2-gnanasruthi30"
+        target="_blank"
+        class="nav-link"
+      >
+        GitHub ↗
+      </a>
+
+    </nav>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+      <div class="badge">
+        BROWSER SECURITY • PRE-FLIGHT ANALYSIS
+      </div>
+
+      <h1>
+        Preview Before<br>
+        <span class="gradient-text">You Proceed.</span>
+      </h1>
+
+      <p>
+        CyberTwin intercepts links before your browser visits them,
+        analyzes the destination, and presents a plain-English security
+        report before you decide whether to proceed.
+      </p>
+
+      <div class="buttons">
+
+        <!-- ZIP DOWNLOAD -->
+
+        <a
+          href="https://github.com/MakersNeedMore-MnM/Round2-gnanasruthi30/raw/refs/heads/main/extension/CyberTwin-v1.0.0.zip"
+          class="btn btn-primary"
+        >
+          📦 Download CyberTwin
+        </a>
+
+        <!-- TEST PLAYGROUND -->
+
+        <a
+          href="https://cybertwin-backend.onrender.com/demo/test-page.html"
+          target="_blank"
+          class="btn btn-secondary"
+        >
+          🧪 Open Test Playground
+        </a>
+
+      </div>
+
+      <div class="status">
+        🟢 Backend Online — Render Deployment Active
+      </div>
+
+    </section>
+
+
+    <!-- FEATURES -->
+
+    <section class="section">
+
+      <h2 class="section-title">
+        What CyberTwin Does
+      </h2>
+
+      <p class="section-subtitle">
+        A pre-flight security layer between you and potentially risky links.
+      </p>
+
+      <div class="grid">
+
+        <div class="card">
+
+          <div class="card-icon">🔍</div>
+
+          <h3>
+            URL Analysis
+          </h3>
+
+          <p>
+            CyberTwin analyzes the destination URL before allowing
+            the browser to navigate to it.
+          </p>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="card-icon">🛡️</div>
+
+          <h3>
+            Threat Detection
+          </h3>
+
+          <p>
+            Detects suspicious characteristics including phishing,
+            brand impersonation, unsafe domains and malicious patterns.
+          </p>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="card-icon">💬</div>
+
+          <h3>
+            Plain-English Report
+          </h3>
+
+          <p>
+            Converts technical security signals into an understandable
+            risk score and explanation.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- INSTALLATION -->
+
+    <section class="section">
+
+      <h2 class="section-title">
+        Install CyberTwin
+      </h2>
+
+      <p class="section-subtitle">
+        Free installation for testing and demonstration.
+      </p>
+
+      <div class="install-box">
+
+        <ol class="steps">
+
+          <li>
+            Click
+            <strong>📦 Download CyberTwin</strong>
+            above and download the ZIP file.
+          </li>
+
+          <li>
+            Extract the downloaded
+            <code>CyberTwin-v1.0.0.zip</code>
+            file.
+          </li>
+
+          <li>
+            Open Chrome and enter
+            <code>chrome://extensions</code>
+            in the address bar.
+          </li>
+
+          <li>
+            Enable
+            <strong>Developer Mode</strong>
+            in the top-right corner.
+          </li>
+
+          <li>
+            Click
+            <strong>Load unpacked</strong>.
+          </li>
+
+          <li>
+            Select the extracted
+            <strong>CyberTwin extension folder</strong>
+            containing
+            <code>manifest.json</code>.
+          </li>
+
+          <li>
+            Open the
+            <strong>Test Playground</strong>
+            and click the test links.
+          </li>
+
+        </ol>
+
+      </div>
+
+    </section>
+
+
+    <!-- ARCHITECTURE -->
+
+    <section class="section">
+
+      <h2 class="section-title">
+        How It Works
+      </h2>
+
+      <p class="section-subtitle">
+        CyberTwin combines browser-side interception with a live analysis backend.
+      </p>
+
+      <div class="architecture">
+
+        <div class="flow">
+
+          <div class="flow-box">
+
+            <strong>🌐 Browser</strong>
+
+            <span>
+              User clicks a link
+            </span>
+
+          </div>
+
+          <div class="arrow">
+            →
+          </div>
+
+          <div class="flow-box">
+
+            <strong>🛡️ CyberTwin</strong>
+
+            <span>
+              Intercepts the URL
+            </span>
+
+          </div>
+
+          <div class="arrow">
+            →
+          </div>
+
+          <div class="flow-box">
+
+            <strong>☁️ Backend</strong>
+
+            <span>
+              Safe Browsing + Analysis
+            </span>
+
+          </div>
+
+          <div class="arrow">
+            →
+          </div>
+
+          <div class="flow-box">
+
+            <strong>📊 Report</strong>
+
+            <span>
+              Risk score + explanation
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- LIVE LINKS -->
+
+    <section class="section">
+
+      <h2 class="section-title">
+        Live Resources
+      </h2>
+
+      <p class="section-subtitle">
+        Verify the deployed CyberTwin components.
+      </p>
+
+      <div class="grid">
+
+        <div class="card">
+
+          <div class="card-icon">🟢</div>
+
+          <h3>
+            Backend Health
+          </h3>
+
+          <p>
+            Check whether the CyberTwin backend is currently online.
+          </p>
+
+          <br>
+
+          <a
+            href="https://cybertwin-backend.onrender.com/health"
+            target="_blank"
+            class="btn btn-secondary"
+          >
+            Check Backend →
+          </a>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="card-icon">🧪</div>
+
+          <h3>
+            Demo Playground
+          </h3>
+
+          <p>
+            Test phishing, obfuscation, redirects, downloads
+            and clean pages.
+          </p>
+
+          <br>
+
+          <a
+            href="https://cybertwin-backend.onrender.com/demo/test-page.html"
+            target="_blank"
+            class="btn btn-secondary"
+          >
+            Run Tests →
+          </a>
+
+        </div>
+
+
+        <div class="card">
+
+          <div class="card-icon">💻</div>
+
+          <h3>
+            Source Code
+          </h3>
+
+          <p>
+            View the complete CyberTwin source code and project structure.
+          </p>
+
+          <br>
+
+          <a
+            href="https://github.com/MakersNeedMore-MnM/Round2-gnanasruthi30"
+            target="_blank"
+            class="btn btn-secondary"
+          >
+            View GitHub →
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+      <p>
+        CyberTwin — Preview Before You Proceed
+      </p>
+
+      <p style="margin-top: 7px;">
+        Browser Security • Pre-Flight URL Analysis • Static HTML Inspection
+      </p>
+
+      <p style="margin-top: 10px;">
+        Built for demonstration and security research.
+      </p>
+
+    </footer>
+
+  </div>
+
+</body>
+</html>
