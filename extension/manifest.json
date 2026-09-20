@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "CyberTwin — Preview Before You Proceed",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Browser-based security tool that intercepts link clicks, analyzes them safely, and shows a plain-English risk report before you proceed.",
   "icons": {
     "16": "icons/icon16.png",
@@ -25,9 +25,10 @@
     "activeTab"
   ],
   "host_permissions": [
-    "http://localhost:3001/*",
-    "<all_urls>"
-  ],
+  "http://localhost:3001/*",
+  "https://cybertwin-backend.onrender.com/*",
+  "<all_urls>"
+],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

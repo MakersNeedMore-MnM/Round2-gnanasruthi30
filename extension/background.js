@@ -3,17 +3,26 @@
  * Handles backend communication, bypassing webpage Content Security Policy (CSP).
  */
 
-const DEFAULT_BACKEND_URL = 'http://localhost:3001';
+const DEFAULT_BACKEND_URL = 'https://cybertwin-backend.onrender.com';
 
 // Initialize default storage settings on installation
 chrome.runtime.onInstalled.addListener(async () => {
   const current = await chrome.storage.local.get(['enabled', 'backendUrl']);
+
   if (current.enabled === undefined) {
     await chrome.storage.local.set({ enabled: true });
   }
-  if (!current.backendUrl) {
-    await chrome.storage.local.set({ backendUrl: DEFAULT_BACKEND_URL });
+
+  // Use the live Render backend instead of the old localhost backend
+  if (
+    !current.backendUrl ||
+    current.backendUrl === 'http://localhost:3001'
+  ) {
+    await chrome.storage.local.set({
+      backendUrl: DEFAULT_BACKEND_URL
+    });
   }
+
   console.log('[CyberTwin] Service Worker initialized with settings:', {
     enabled: current.enabled ?? true,
     backendUrl: current.backendUrl || DEFAULT_BACKEND_URL
